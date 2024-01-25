@@ -21,7 +21,7 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	webmentions: {
-		link: "",
+		link: "https://webmention.io/www.kylerush.org/webmention",
 	},
 };
 
