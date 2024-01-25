@@ -2,47 +2,29 @@
 import { Image } from "astro:assets";
 
 import PageLayout from "@/layouts/Base";
-import aboutImg from "@/assets/about-astro.png";
+import kylePhoto from "@/assets/kyle-rush.jpg";
+import SocialList from "@/components/SocialList";
 
 const meta = {
 	title: "About",
-	description: "I'm a starter theme for Astro.build",
+	description: "Kyle Rush is a seasoned technology leader with deep experience in startups and applied AI.",
 };
 ---
 
 <PageLayout meta={meta}>
 	<div class="space-y-6">
 		<h1 class="title">About</h1>
-		<p>
-			Hi, I’m a starter Astro. I’m particularly great for getting you started with your own blogging
-			website.
-		</p>
+		<p>Kyle Rush is a technology leader with 15 years of experience across D2C e-commerce, SaaS, publishing, agency, and presidential campaigns. Most recently he co-founded an AI startup that generates legal advice within seconds for startup founders, for cents on the dollar, at the same quality as top-tier law firms.</p>
+		<p>Previously he was the CTO at Maisonette where he led the Engineering, Product, and Data & Analytics teams who built out marketplace technology serving thousands of brands with hundreds of thousands of products. Before joining Maisonette he was the VP of Engineering at Casper where he lead the technology team that helped grow the fastest growing consumer brand in history from an e-commerce mattress brand to a global, multi-category, omnichannel, public company complete with connected devices that help customers sleep better.</p>
+		<p>Kyle has been leading technology teams for more than a decade with experience in retail, political campaigns, B2B SaaS, and publishing. At the Obama for America (2012) and Hillary for America (2016) campaigns he led teams that built fundraising technology which processed over a billion dollars in online contributions and built organizing software for over a million volunteers across the country. Aside from politics and technology, his passions in life are wellness and cooking (and eating) Mexican food.</p>
+		<SocialList />
 		<div class="flex justify-center">
 			<Image
-				src={aboutImg}
-				alt="A cartoon cactus looking at the 'Astro.build' logo"
+				src={kylePhoto}
+				alt="Photo of Kyle Rush"
 				loading="eager"
 				fetchpriority="high"
 			/>
 		</div>
-		<p>Here are my some of my awesome built in features:</p>
-		<ul class="list-inside list-disc">
-			<li>I'm ultra fast as I'm a static site</li>
-			<li>I'm fully responsive</li>
-			<li>I come with a light and dark mode</li>
-			<li>I'm easy to customise and add additional content</li>
-			<li>I have Tailwind CSS styling</li>
-			<li>Shiki code syntax highlighting</li>
-			<li>Satori for auto generating OG images for blog posts</li>
-		</ul>
-		<p>
-			Clone or fork my <a
-				class="cactus-link inline-block"
-				href="https://github.com/chrismwilliams/astro-cactus"
-				target="_blank"
-				rel="noopener noreferrer"
-				aria-label="github repository">repo</a
-			> if you like me!
-		</p>
 	</div>
 </PageLayout>
