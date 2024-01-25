@@ -11,7 +11,7 @@ import icon from "astro-icon"
 // https://astro.build/config
 export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
-	site: "https://astro-cactus.chriswilliams.dev/",
+	site: "https://www.kylerush.org/",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
 		rehypePlugins: [
