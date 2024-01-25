@@ -2,11 +2,11 @@
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
-// import { getAllPosts, sortMDByDate } from "@/utils";
+import { getAllPosts, sortMDByDate } from "@/utils";
 
-const MAX_POSTS = 10;
-// const allPosts = await getAllPosts();
-// const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+const MAX_POSTS = 100;
+const allPosts = await getAllPosts();
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 // const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 // 	{
@@ -58,7 +58,7 @@ const MAX_POSTS = 10;
 		<p class="mb-4">I'm Kyle Rush, an experienced software engineering leader with a passion for building exceptional customer experiences. I spend my time building startups with applied AI. I work with large language models (LLM) a lot and blog about that work here.</p>
 		<SocialList />
 	</section>
-	<!-- <section aria-label="Blog post list" class="mt-16">
+	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
@@ -69,7 +69,7 @@ const MAX_POSTS = 10;
 				))
 			}
 		</ul>
-	</section> -->
+	</section>
 	<!-- <section class="mt-16">
 		<h2 class="title mb-4 text-xl">Technologies</h2>
 		<ul class="space-y-4 sm:space-y-2">
