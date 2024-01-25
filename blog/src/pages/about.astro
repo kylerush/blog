@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+
+import PageLayout from "@/layouts/Base";
+import kylePhoto from "@/assets/kyle-rush.jpg";
+import SocialList from "@/components/SocialList";
+
+const meta = {
+	title: "About",
+	description: "Kyle Rush is a seasoned technology leader with deep experience in startups and applied AI.",
+};
+---
+
+<PageLayout meta={meta}>
+	<div class="space-y-6">
+		<h1 class="title">About</h1>
+		<p>Kyle Rush is a technology leader with 15 years of experience across D2C e-commerce, SaaS, publishing, agency, and presidential campaigns. Most recently he co-founded an AI startup that generates legal advice within seconds for startup founders, for cents on the dollar, at the same quality as top-tier law firms.</p>
+		<p>Previously he was the CTO at Maisonette where he led the Engineering, Product, and Data & Analytics teams who built out marketplace technology serving thousands of brands with hundreds of thousands of products. Before joining Maisonette he was the VP of Engineering at Casper where he lead the technology team that helped grow the fastest growing consumer brand in history from an e-commerce mattress brand to a global, multi-category, omnichannel, public company complete with connected devices that help customers sleep better.</p>
+		<p>Kyle has been leading technology teams for more than a decade with experience in retail, political campaigns, B2B SaaS, and publishing. At the Obama for America (2012) and Hillary for America (2016) campaigns he led teams that built fundraising technology which processed over a billion dollars in online contributions and built organizing software for over a million volunteers across the country. Aside from politics and technology, his passions in life are wellness and cooking (and eating) Mexican food.</p>
+		<SocialList />
+		<div class="flex justify-center">
+			<Image
+				src={kylePhoto}
+				alt="Photo of Kyle Rush"
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</div>
+	</div>
+</PageLayout>
