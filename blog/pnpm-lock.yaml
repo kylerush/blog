@@ -20,6 +20,9 @@ dependencies:
   astro:
     specifier: 4.2.1
     version: 4.2.1(typescript@5.3.3)
+  astro-google-analytics:
+    specifier: ^1.0.3
+    version: 1.0.3
   astro-icon:
     specifier: ^1.0.2
     version: 1.0.2
@@ -2044,6 +2047,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /astro-google-analytics@1.0.3:
+    resolution: {integrity: sha512-5bD7jA15yxVaUFVVEFG6KKMphYJ4AKP4+HSqCVBpTBnqh8LL0giTdAHpG9KJs3JaFbGQUTWP5Pqt8+twz7f55Q==}
+    dev: false
 
   /astro-icon@1.0.2:
     resolution: {integrity: sha512-MGgnjxHnI50bBWasBdt0pw/S9lWharfxhUv1sP2Vj1/KDaT/Cz35ZdlBgb4DKtfzQZREIJN2eQGqmVbvLq5p3w==}
