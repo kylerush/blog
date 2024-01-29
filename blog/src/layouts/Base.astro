@@ -20,9 +20,7 @@ const {
 <html lang={siteConfig.lang}>
 	<head>
 		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
-		{ import.meta.env.MODE !== "development" && (
 		<GoogleAnalytics id="G-G4JVPJSQQE" />
-		)}
 	</head>
 	<body>
 		<ThemeProvider />
