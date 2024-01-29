@@ -32,7 +32,9 @@ const { headings } = await post.render();
 				<slot />
 				<WebMentions />
 			</div>
+			{ import.meta.env.MODE !== "development" && (
 			<Comments />
+			)}
 		</article>
 	</div>
 	<button
