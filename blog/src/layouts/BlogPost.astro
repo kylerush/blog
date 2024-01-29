@@ -5,6 +5,7 @@ import BaseLayout from "./Base.astro";
 import BlogHero from "@/components/blog/Hero";
 import TOC from "@/components/blog/TOC";
 import WebMentions from "@/components/blog/webmentions/index";
+import Comments from "@/components/Comments"
 
 interface Props {
 	post: CollectionEntry<"post">;
@@ -31,6 +32,9 @@ const { headings } = await post.render();
 				<slot />
 				<WebMentions />
 			</div>
+			{ import.meta.env.MODE !== "development" && (
+			<Comments />
+			)}
 		</article>
 	</div>
 	<button
