@@ -14,7 +14,7 @@ In this post I'll describe how the following all-JavaScript application stack ex
 
 ![System diagram](./system-diagram.svg)
 
-I walk you through how this application architecture works at a high level. To illustrate this I provide some code snippets. This blog post is not about writing production application code and the code snippets are not production quality. This blog post would be far too long and difficult to follow otherwise. I am specifically not covering type safety, database connection pooling, etc.
+I walk you through how this application architecture works at a high level. To illustrate this I provide some code snippets. This blog post is not about writing production application code and the code snippets are not production quality. This blog post would be far too long and difficult to follow otherwise. I am specifically not covering type safety, database connection pooling, etc. I am also not going to cover prompt engineering and optimization. The prompts I use below are illustrative. They may not actually produce what the example code expects.
 
 ## Using LMs to provide legal advice
 Imagine an LM based application that can give legal advice to startups. Let's say a startup accidentally hired the wrong person into a C-Suite role and needs to do a termination. How do they go about that?
@@ -85,7 +85,7 @@ export default component$(() => {
 })
 ```
 
-Here's the beginning of our page that shows the answer to the legal question. Note that we haven't written any code to generate the advice so nothing will render inside the `p` tag of the component yet.
+Here's the beginning of our page that shows the answer to the legal question. Note that we haven't written any code to generate the advice so nothing will render inside the `<p>` tag of the component yet.
 
 */qwik-app/src/routes/matter/[id]/index.tsx*:
 ```js
@@ -120,21 +120,22 @@ export default component$(() => {
 ```
 
 ## Background job processing
-Here's where things get a little complex! When a new legal case is created, we need to retrieve the playbook so the LM can determine what intermediate questions it needs answers to. Each intermediate question is going to have its own set of LM operations until it gets answered. We won't cover all those LM calls here. Instead, below we'll cover just the worker that retrieves the playbook and uses the LM to create the intermediate questions.
-
-![Worker flow diagram](./worker-flow.svg)
-
-As mentioned above, the LM API calls can take a while and we need to make many of them. Our page load times could exceed a full minute if we make the LM API requests while rending a page. We also can't make the requests in the browser because we need to hide our API key from the site visitors. We could use Qwik as a proxy to OpenAI so that we could execute the LM requests from the browser while hiding our API key. The biggest drawback here is that we'll be locking up threads on our main web server for several seconds at a time. To make sure the app can scale load, we want to keep everything in the ciritcal path on the main web server super zippy. Another drawback is that we'd be moving tons of our application logic to the browser. Now everyone can see our proprietary code and the browser is working overtime. All-in-all not a good idea.
+As mentioned above, the LM API calls can take a while and we need to make many of them. Our page load times could exceed a full minute if we make the LM API requests in the Qwik page routes. We also can't make the requests in the browser because we need to hide our API key from the site visitors. We could use Qwik as an API proxy to OpenAI so that we could execute the LM requests from the browser while hiding our API key. The biggest drawback here is that we'll be locking up threads on our main web server for several seconds at a time. To make sure the app can scale load, we want to keep everything in the ciritcal path on the main web server super zippy. Another drawback is that we'd be moving tons of our application logic to the browser. Now everyone can see our proprietary code. Additionally this likely means shipping tons of JavaScript to the browser which will be bad for performance. All-in-all not a good idea.
 
 A good solution to this problem is to move the LM workload to background jobs. This allows us to remove the long blocking time of LM calls from the critical path (no long page loads). It also allows us to parallelize the LM calls to speed up the generation of the legal advice. [BullMQ](https://bullmq.io/) is a full-featured solution that fits the bill. I won't go into too much detail here but with BullMQ we can:
 
 - Make the LM API calls in background jobs addressing the LM latency problem;
-- Retry failed LM jobs addressing the LM API flakyness;
-- Rate limit jobs to address OpenAI API rate limits (will cover this in another blog post);
+- Retry failed LM jobs addressing the LM API flakyness (will be covered in another blog post);
+- Rate limit jobs to address OpenAI API rate limits (will be covered in another blog post);
 - Parallelize the LM calls, further addressing the latency problem.
 
-It will take far too long to write all the LM workers mentioned in the legal use case above. We'll use some shorthand to skip ahead. Let's assume that we already have a worker that processed the initial legal question and created the 10-15 follow up questions to get the information it needs to answer the legal question. In this example below, we have a worker that uses an LM to determine if one of the follow up questions can be answered by either the Carta or Rippling API. I'm taking a lot of shortcuts here for brevity. Normally you'd do a lot of quality checking on the response from the LM before writing the response to your database.
+Here's a high level diagram of our worker flow:
 
+![Worker flow diagram](./worker-flow.svg)
+
+When a new legal matter is created, we need to retrieve the playbook so the LM can determine what intermediate questions it needs answers to ("Retrieve Playbook" step in the diagram below). Then we need to ask the LM to create the intermediate questions ("Determine Intermediate Questions" step in the diagram below).
+
+Here's some worker code that does exactly that. When the intermediate questions have been created, it adds each question to the queue for the next worker ("ProcessQuestion").
 ```js
 import OpenAI from "openai";
 import { Worker } from "bullmq";
@@ -142,14 +143,14 @@ import { tools } from "./tools";
 import { sql } from "../utils/sql";
 // Already configured openai client
 import { openai } from "./utils/openai";
-// Already implemented retrieval-augmented-generation (RAG) that retrieves the proper playbook on how to answer the legal question
-import { getPlaybook } from "./utils/playbook";
+// Retrieval-augmented-generation (RAG) function
+import { getPlaybook } from "./utils/get-playbook";
 
 const worker = new Worker('ProcessMatter', async job => {
   // Get the playbook on how to answer the legal question
   const playbook = await getPlaybook(job.data.question)
 
-  // Ask the model how to answer the question
+  // Ask the model what intermediate questions need to be answered before providing legal advice
   const completion = await openai.chat.completions.create({
     messages: [
       {
@@ -180,9 +181,10 @@ const worker = new Worker('ProcessMatter', async job => {
     responseFormat: { type: "json_object" }
   });
 
+  // Parse the JSON response
   const answer = JSON.parse(completion.choices[0].message.content);
 
-  // Save the response to the database
+  // Insert the questions into the database
   const newQuestions = await sql`
     INSERT INTO "question" ${ sql(answer.questions) } RETURNING "id", "content", "matter_id";
   `
@@ -217,10 +219,24 @@ const worker = new Worker('ProcessMatter', async job => {
 });
 ```
 
+Next we need to process each intermeidate question. There's too many steps and too much code involved to cover it all in this high level overview. Instead, I've created a diagram that gives you a rough idea of how it might look:
+
+![Intermediate question flow](./intermediate-question-flow.svg)
+
+Numbers 1 & 2 are a worker that makes an LLM call to determine if the question can be answered by an API. If not, it marks the question for the human and the UI reactively updates to add the question. Number 3, 4, & 5 are a worker that determines if information is needed from the human to make the API request and if so creates the question. An example of this might be that the employee's name is needed to search for their demographics with the Rippling API. Number 6 & 7 are a worker that uses the LM to construct the API request and send it. Numbers 8 & 9 are a worker that uses an LM to review the JSON API response and convert it to an english sentence(s) and store it in the database. Number 10 is our final worker that generates advice (more on that below). There are actually more steps than this in the app, but I've simplified it here for brevity.
+
+There are *n* number of intermediate questions and we run through this series of workers for each one. With this solution, we could parallelize the processing of this flow for all intermediate questions. We just throw the jobs into the queues and let the workers chew through them.
+
+As a quick aside, take a look at the [BullMQ concurrency docs](https://docs.bullmq.io/guide/workers/concurrency#multiple-workers):
+
+> The other way to achieve concurrency is to provide multiple workers. This is the recommended way to setup bull anyway since besides providing concurrency it also provides higher availability for your workers. You can easily launch a fleet of workers running in many different machines in order to execute the jobs in parallel in a predictable and robust way.
+
+Instead of taking an average of 3 seconds per intermediate question we can probably get all intermediate questions processed in 3 seconds total. Awesome! I won't provide code examples for all these workers for the sake of brevity.
+
 ## Making the application real-time reactive
 Let's skip ahead a few steps and assume that this point all the intermediate questions have been answered. I mentioned above that the final LM call that generates legal advice can take 30 seconds or longer. It would be a better user experience if we could stream the LM completion to the browser. This way the user is seeing a ChatGPT type experience where the text appears in the UI piece-by-piece. But our LM requests are happening in a background job so how can we stream them to the browser?
 
-Enter Postgres [listen/notify channels](https://www.postgresql.org/docs/current/sql-listen.html) and [triggers](https://www.postgresql.org/docs/current/triggers.html). We'll execute a SQL `UPDATE` query on the table that contains our legal advice each time we receive a chunk of text from the LM. We'll also configure a Postgres trigger function to run on every `UPDATE` that publishes the text from the LM to a channel that clients can listen on. Now in our Qwik backend we can listen on the channel with our Postgres client and steam all the channel messages down to the browser. Let's see some code.
+Enter Postgres [listen/notify](https://www.postgresql.org/docs/current/sql-listen.html), [functions](https://www.postgresql.org/docs/current/sql-createfunction.html), and [triggers](https://www.postgresql.org/docs/current/triggers.html). We'll execute a SQL `UPDATE` query on the row in the table that contains our legal advice each time we receive a chunk of text from the LM stream. We'll also configure a Postgres trigger to execute a function which runs on every `UPDATE` that publishes the text from the LM to a channel that clients can listen on. Then, in our Qwik backend, we can listen on the channel with our Postgres client and stream each chunks from the LLM down to the browser. Let's see some code.
 
 **Postgres trigger function + channel**
 
@@ -262,7 +278,7 @@ const openai = new OpenAI({
   apiKey: process.env['OPENAI_API_KEY'],
 });
 
-const worker = new Worker('foo', async job => {
+const worker = new Worker('GenerateAdvice', async job => {
   // Variable to the hold the stream chunks
   let completion = ""
 
@@ -325,7 +341,9 @@ A few side notes. I think in general it's a good idea to write each chunk you re
 
 **Listening for notifications on the channel**
 
-Now we can use the Qwik backend and Postgres client to listen for notifications on the channel. In this code block, we use the `server$` function to create a [readable stream](https://qwik.builder.io/docs/server$/#streaming-responses) for our JavaScript running in the browser to listen to. Within the server function we listen for notifications on the "advice_mutation" Postgres channel that our Postgres trigger publishes to. We inspect the notification payload to make sure it matches the currently loaded case ID and the currently authenticated user ID. Then we send the data down to the client. The client receives the data and updates the [signal](https://qwik.builder.io/docs/components/state/) that the component renders.
+Now we can use the Qwik backend and Postgres client to listen for notifications on the channel. In this code block, we use the `server$` function to create a [readable stream](https://qwik.builder.io/docs/server$/#streaming-responses) for our JavaScript running in the browser to listen to.
+
+Within the server function we listen for notifications on the "advice_mutation" Postgres channel that our Postgres trigger publishes to. We inspect the notification payload to make sure it matches the currently loaded case ID and the currently authenticated user ID. Then we send the data down to the client. The client receives the data and updates the [signal](https://qwik.builder.io/docs/components/state/) that the component renders.
 
 ```jsx
 import { server$ } from "@builder.io/qwik-city";
@@ -418,12 +436,18 @@ export default component$(() => {
 
   // Render the component with the advice
   return (
-    <p>{ advice.value }</p>
+    <p>{ advice.value ? advice.value : "" }</p>
   )
 })
 ```
 
-One note here: If the advice is already fully generated from the LM we do not need to open a socket to our web server and listen for changes. To keep things simple in the explanation I did not include this logic.
+And just like that, our LM streaming data gets updated in our database and UI nearly instantly on each chunk!
+
+I want to take a quick pause here and note how amazingly easy Qwik makes creating a readable stream. You probably didn't even see this in the code block above. From the Qwik docs:
+
+> server$ can return a stream of data by using an async generator. This is useful for streaming data from the server to the client.
+
+One note here: If the advice is already fully generated from the LM we do not need to open a socket to our web server and listen for changes. To keep things simple in the explanation I did not include this logic. To accomplish this we just need to add some conditional logic around `useVisibleTask`.
 
 ## Conclusion
 
