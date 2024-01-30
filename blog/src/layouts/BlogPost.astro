@@ -32,8 +32,8 @@ const { headings } = await post.render();
 			>
 				<slot />
 				<WebMentions />
+				<ConsultingAside />
 			</div>
-			<ConsultingAside />
 			{ import.meta.env.MODE !== "development" && (
 			<Comments />
 			)}
