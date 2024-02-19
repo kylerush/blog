@@ -1,4 +1,31 @@
-User-agent: *
+User-agent: Googlebot
 Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Uesr-agent: MSNBot-Media
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
 
 Sitemap: https:/www.kylerush.org/sitemap-index.xml
