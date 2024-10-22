@@ -1,17 +1,18 @@
 ---
 title: "An open minded approach to interviewing candidates"
 publishDate: "20 February 2024"
-description: "To get the best results when interviewing candidates, adop an open minded approach and avoid test-based interview questions."
+description: "To get the best results when interviewing candidates, adopt an open-minded approach and avoid test-based interview questions."
 coverImage:
   src: "./collaboration.webp"
   alt: "Software Engineer collaborative interview"
 tags: ["interviews", "hiring", "management"]
 ---
+
 In my experience, most companies design their talent acquisition and assessment process like this:
 
 > We need more Software Engineers because of x. We want them to turn Jira tickets into code. To make sure they are "good" engineers, we'll assess them using coding tests. If they can pass the test, then we will hire them.
 
-The reason (*x*) for needing more Software Engineers is usually something along the lines of:
+The reason (_x_) for needing more Software Engineers is usually something along the lines of:
 
 - "We need to write code faster"
 - "We need to launch a new product and need a new team to do it"
@@ -45,7 +46,7 @@ With the test-based approach everything will be fantastic at first. Another Reac
 
 In your test-based hiring process you will inevitably come across valuable talent that can't pass the test. For example, a candidate that is a good problem solver and collaborator has experience with your typical MVC based PHP web application. They will certainly fail the TypeScript/React code test. In fact, this candidate may never even apply because your job description lays bare your test-based interview process: it requires experience with React and TypeScript. So now you've widdled out a good problem solver and collaborator from your interview process, or discouraged them from applying at all. Now all you have in your interview pipeline are hammers. No saws.
 
-But wait a second, this is crazy! Why would we hire a PHP web developer for a job to write React code? The answer is because you want effective problem solvers and collaborators on your team. This is the most important thing for long term success. You want to hire problem solvers that think and work creatively and effectively. Problem solving is not limited to React and TypeScript. Even more, problem solvers that are exposed to a variety of tools are more effective problem solvers. Having the knowledge of how the MVP PHP community solves web application problems *helps* your React team solve problems better. Even more, if a PHP developer applies to your React engineer job, it signals a candidate that is open-minded and wants to try different solutions to solve problems. This is a *good* thing.
+But wait a second, this is crazy! Why would we hire a PHP web developer for a job to write React code? The answer is because you want effective problem solvers and collaborators on your team. This is the most important thing for long term success. You want to hire problem solvers that think and work creatively and effectively. Problem solving is not limited to React and TypeScript. Even more, problem solvers that are exposed to a variety of tools are more effective problem solvers. Having the knowledge of how the MVP PHP community solves web application problems _helps_ your React team solve problems better. Even more, if a PHP developer applies to your React engineer job, it signals a candidate that is open-minded and wants to try different solutions to solve problems. This is a _good_ thing.
 
 Of course these technology examples are contrived and not the main point. This has nothing to do with React and PHP. The main point is that a team is simply more effective at problem solving if it has seen several different ways to solve a problem.
 
