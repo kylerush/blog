@@ -341,8 +341,6 @@ At this point, I was running eight agents and the bill started climbing. I had s
 
 I tried switching between models constantly. Sonnet here, Opus there. Thinking mode for this, fast mode for that. I'd trim context windows to save a few dollars. It was exhausting and counterproductive.
 
-I stopped optimizing for cost and started optimizing for results. From then on, I left Opus 4.5 with thinking mode and max context on. I let the agents have as much reasoning headroom as they want.
-
 I remember going to my partner Isaiah and saying "I've spent $600 in coding agent inference over the past few days." His response: "And? It's worth it."
 
 That was the epiphany.
