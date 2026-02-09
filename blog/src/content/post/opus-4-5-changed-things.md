@@ -1,7 +1,7 @@
 ---
 title: "Opus 4.5 changed things"
 publishDate: "9 February 2026"
-description: "A field report on what changed when I stopped using AI to write code and started managing it like software engineers."
+description: "Runing many parallel and isolated coding agents in Cursor."
 tags: []
 ---
 
