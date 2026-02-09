@@ -1,9 +1,11 @@
 ---
-title: "Opus 4.5 really changed things: Or, how I learned to stop worrying and love the agents"
+title: "Opus 4.5 really changed things"
 publishDate: "9 February 2026"
-description: "Runing many parallel and isolated coding agents in Cursor."
+description: "How I run 8 parallel Cursor AI coding agents in isolated devcontainers, mass-producing pull requests with planning, rules, and observability."
 tags: []
 ---
+
+## Or, how I learned to stop worrying and love the agents
 
 > I stopped using AI to write code and started treating it like a team of engineers. That single shift changed everything else for me.
 
