@@ -82,6 +82,8 @@ Everything runs in Docker devcontainers on a Debian-based environment that close
 
 Environment parity matters. Agents need to work in the same world humans do.
 
+> The future belongs to people with agency.
+
 ## Why Cursor
 
 There are a lot of coding-agent tools right now: Codex, Codex CLI, Claude Code CLI, Cursor IDE, Cursor CLI, OpenCode, and many more.
@@ -433,13 +435,25 @@ I could be wrong — I often am — but a few things seem clear.
 
 Engineers are becoming engineering managers of AI teams. Speed matters. Planning matters. Observability matters. And once execution becomes cheap, learning accelerates dramatically.
 
+### Agency and the disappearance of spec work
+
+The future belongs to people with agency. Code throughput is no longer the bottleneck — the bottleneck has shifted upstream. I don't think a product manager or any upstream process can reliably assign enough work to an engineer running eight coding agents. The math just doesn't work. A PM speccing out work for five engineers who each have eight agents isn't managing a team of five — they're trying to feed forty. That pipeline will never keep up.
+
+I was never a big fan of spec'd-out work anyway. I think it's not good. I'd rather give people user problems to solve and let them figure out the best path. And I think that instinct is about to become the default. The days of detailed specs and carefully scoped tickets handed down from above are probably over — maybe not for everything, but for most of the work that matters.
+
+What replaces it is hybrid product/engineer people. People with agency, with taste, who know what to work on without being told. People who can look at a product, spot a user problem, and just go solve it. Going forward, I think you want your "engineering managers" — the people orchestrating these agent teams — to be exactly that kind of person. Not someone waiting for a ticket. Someone who sees the problem and moves.
+
+### The junior engineer paradox
+
 For the market: I think this will make it genuinely harder for entry-level and junior engineers to get hired. A lot of the work that used to justify those roles can now be done by agents under the supervision of experienced engineers. That's uncomfortable.
 
 There's a paradox, though. If younger engineers don't get hired and don't get experience, who manages all of these agents and autonomous codebases in ten or twenty years? Someone has to learn how systems actually behave in the real world. And younger engineers bring something hard to replace — many of them are willing to try things without fear. They haven't been beaten down by bad SaaS launches, painful outages, or messy cloud migrations. They're not jaded. That lack of baggage is a strength, and every team needs it.
 
-As for the rest of us — we are engineering managers now. We manage teams of AI software engineers.
+### Learning is the point
 
-How this technology gets used matters a lot. If you're using agents purely to ship more code, I think you're missing the point. I don't ship code I don't understand. When agents build something, I ask a lot of questions. Sometimes I worry I'm filling the context window with questions instead of code — but that's actually the best part.
+How this technology gets used matters a lot — and this applies to everyone, not just juniors. If you're using agents purely to ship more code, I think you're missing the point. I don't ship code I don't understand. When agents build something, I ask a lot of questions. Sometimes I worry I'm filling the context window with questions instead of code — but that's actually the best part.
+
+You have a choice every time an agent hands you something. You can ask it to explain what it did and why — dig into the tradeoffs, understand the architecture, learn something new. Or you can just ship it and move on. The latter is faster in the moment, but it results in no growth. And no growth will cause you big problems. You'll end up managing systems you don't understand, making decisions without context, and losing the judgment that makes you valuable in the first place.
 
 The real silver lining is learning. The fun was never really about typing. It was about understanding systems. With agents, I can learn fifteen new things in a day about software, infrastructure, architecture, and tradeoffs — without waiting on a senior engineer, digging through search results, or trawling Stack Overflow.
 
