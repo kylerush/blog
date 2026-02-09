@@ -1,5 +1,5 @@
 ---
-title: "Opus 4.5 changed things"
+title: "Opus 4.5 really changed things: Or, how I learned to stop worrying and love the agents"
 publishDate: "9 February 2026"
 description: "Runing many parallel and isolated coding agents in Cursor."
 tags: []
@@ -300,12 +300,6 @@ We fixed this at three layers:
 Together, those changes eliminated the majority of blocking I/O and made parallel work stable.
 
 Each devcontainer runs a full, identical stack: Postgres (primary and test), Redis (primary and test), TimescaleDB, Neo4j, FastAPI, Celery workers, and the Qwik/Fastify web server. When I'm running four agents on a machine, I'm running four complete copies of that stack side by side, all isolated from each other. Nothing is shared accidentally. That isolation is what lets agents freely create migrations, reset databases, and run destructive operations without stepping on each other.
-
-To make this concrete, here's a snapshot from `docker stats` and `htop` while four agents are actively working:
-
-[IMAGE: `docker stats` output showing resource usage]
-
-[IMAGE: `htop` output showing CPU and memory distribution]
 
 Devcontainers typically sit around ~6–16% CPU and ~3–6 GB RAM each. Datastores (Postgres, Redis, TimescaleDB, Neo4j) are mostly idle: ~0–1% CPU. Across the machine: roughly ~40–45% of 24 logical CPUs and ~23 GB / ~60 GB RAM.
 
