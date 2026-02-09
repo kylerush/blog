@@ -5,7 +5,7 @@ description: "A field report on what changed when I stopped using AI to write co
 tags: []
 ---
 
-> I stopped using AI to write code and started treating it like a team of engineers.That single shift changed everything else for me.
+> I stopped using AI to write code and started treating it like a team of engineers. That single shift changed everything else for me.
 
 Over the last few weeks, I deliberately stopped using AI agents to _write code_ and started treating them as _software engineers_. That sounds subtle. It isn't. It changes how work gets planned, how it gets reviewed, what tooling matters, and where humans should spend their time.
 
@@ -48,7 +48,7 @@ Everything below is how those lessons showed up in practice.
 
 Looking back, I think there have been three distinct eras so far, and a fourth emerging.
 
-> A real coding agent isn’t defined by how well it writes code.It’s defined by whether it can operate across the entire software lifecycle.
+> A real coding agent isn’t defined by how well it writes code. It’s defined by whether it can operate across the entire software lifecycle.
 
 **Era 1: VS Code + GitHub Copilot with tab-complete.** This felt novel. It was our first taste of "oh, sometimes these LLMs can be right." Often they weren't. We laughed at plenty of the suggestions and wondered where some of them came from. But even when tab-complete was right only about half the time, I found it useful and kept it on.
 
@@ -259,7 +259,7 @@ This was an iterative process. I made many, many changes to these files every ti
 
 At first, I ran one agent at a time. I'd plan, watch it work, review output.
 
-> Parallelism collapses when feedback loops are slow.Speed stops being a preference and becomes structural.
+> Parallelism collapses when feedback loops are slow. Speed stops being a preference and becomes structural.
 
 It was excruciating. I generally never look at Instagram or X while I'm working, but I found myself picking up my phone while the agent was developing. That was the signal.
 
@@ -321,7 +321,7 @@ Then I hit the next bottleneck.
 
 We went from a few deployments per day to double digits.
 
-> Agents will break things. Humans do too.The goal isn’t perfection — it’s fast detection and recovery.
+> Agents will break things. Humans do too. The goal isn’t perfection — it’s fast detection and recovery.
 
 CI jobs queued up. Fifteen-minute deploys stacked back-to-back. What used to be tolerable suddenly blocked everything. I was looking at around 2 hours for all my changes to deploy one-by-one.
 
@@ -405,7 +405,7 @@ You need to invest in top-notch observability in the beginning now. It's no long
 
 Speed and parallelism are the obvious changes. The more interesting shift is what becomes _feasible_.
 
-> The fun was never really about typing.It was about understanding systems.
+> The fun was never really about typing. It was about understanding systems.
 
 How this technology gets used matters a lot. If you're using agents purely to ship more code, I think you're missing the point.
 
